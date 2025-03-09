@@ -1,0 +1,42 @@
+{
+    "name": "vite-bundle-stats-metrics",
+    "version": "1.0.0",
+    "description": "A Vite plugin to generate bundle stats metrics.",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsup src/index.ts --format esm,cjs --dts",
+        "prepare": "npm run build",
+        "test": "vitest"
+    },
+    "keywords": [
+        "vite",
+        "vite-plugin",
+        "bundle",
+        "stats",
+        "metrics"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+        "vite": "^4.0.0"
+    },
+    "devDependencies": {
+        "tsup": "^7.2.0",
+        "typescript": "^5.8.2",
+        "vitest": "^0.34.6"
+    },
+    "exports": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+    },
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/vite-bundle-stats-metrics.git"
+    }
+}
