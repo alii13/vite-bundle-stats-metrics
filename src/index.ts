@@ -12,7 +12,7 @@ type BundleStatsOptions = {
 
 
 
-function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
+function bundleStatsMetrics(options: BundleStatsOptions = {}): PluginOption {
 
     const isProd = process.env.NODE_ENV === 'production';
     const jsonFilePath = options.outputFile || join(process.cwd(), isProd ? 'bundle-stats-prod.json' : 'bundle-stats-dev.json');
@@ -110,5 +110,5 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
     } as Plugin; // ✅ Explicitly cast as Plugin
 }
 
-export default bundleStatsMetrics as PluginOption;
+export default bundleStatsMetrics;
 
