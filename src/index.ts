@@ -1,4 +1,4 @@
-import { Plugin } from 'vite';
+import { Plugin,PluginOption } from 'vite';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
@@ -110,4 +110,5 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
     } as Plugin; // ✅ Explicitly cast as Plugin
 }
 
-export default bundleStatsMetrics;
+export default bundleStatsMetrics as PluginOption;
+
