@@ -1,6 +1,6 @@
 import { Plugin, PluginOption } from 'vite';
 import { writeFileSync } from 'fs';
-import { join } from 'path';
+import { join, extname } from 'path';
 
 // Plugin Options Interface
 type BundleStatsOptions = {
@@ -12,7 +12,9 @@ type BundleStatsOptions = {
 
 function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
     const isProd = process.env.NODE_ENV === 'production';
-    const jsonFilePath = options.outputFile || join(process.cwd(), isProd ? 'bundle-stats-prod.json' : 'bundle-stats-dev.json');
+    let fileExtension = options.format || 'json';
+    let jsonFilePath = options.outputFile || join(process.cwd(), `bundle-stats.${fileExtension}`);
+
     let buildStartTime = 0;
     let totalBuildTime = 0;
 
@@ -73,7 +75,7 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
                 .join('\n');
         }
     
-        writeFileSync(filePath, content || '', 'utf8');
+        writeFileSync(filePath, content, 'utf8');
     }
     
     return {
@@ -104,5 +106,5 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
 }
 
 export default function bundleStatsMetricsPlugin(options?: BundleStatsOptions): PluginOption {
-    return options ? bundleStatsMetrics(options) : false;
+    return options ? bundleStatsMetrics(options) : undefined;
 }
