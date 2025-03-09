@@ -10,7 +10,10 @@ type BundleStatsOptions = {
     warnThreshold?: number; // Warn if bundle size exceeds this (in KiB)
 };
 
+
+
 function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
+
     const isProd = process.env.NODE_ENV === 'production';
     const jsonFilePath = options.outputFile || join(process.cwd(), isProd ? 'bundle-stats-prod.json' : 'bundle-stats-dev.json');
     let buildStartTime = 0;
@@ -80,7 +83,7 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
 
     return {
         name: 'bundle-stats-metrics',
-        apply: 'build', // Run only in build mode
+        apply: 'build',
         buildStart() {
             buildStartTime = Date.now();
         },
@@ -88,7 +91,7 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
             totalBuildTime = (Date.now() - buildStartTime) / 1000;
         },
         generateBundle(_, bundle) {
-            if (!isProd) return; // Run only in production mode
+                     if (!isProd) return; // Run only in production mode
             const stats = extractSizeInfo(bundle);
             writeOutputToFile(stats, jsonFilePath, options.format || 'json');
 
@@ -103,8 +106,8 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
             if (options.warnThreshold && stats.bundle.value > options.warnThreshold) {
                 console.warn(`⚠️ Warning: Bundle size (${stats.bundle.value} KiB) exceeds the threshold of ${options.warnThreshold} KiB`);
             }
-        }
-    };
+        },
+    } as Plugin; // ✅ Explicitly cast as Plugin
 }
 
 export default bundleStatsMetrics;
