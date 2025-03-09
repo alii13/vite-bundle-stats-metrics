@@ -1,4 +1,4 @@
-import { Plugin,PluginOption } from 'vite';
+import { Plugin, PluginOption } from 'vite';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
@@ -10,10 +10,7 @@ type BundleStatsOptions = {
     warnThreshold?: number; // Warn if bundle size exceeds this (in KiB)
 };
 
-
-
-function bundleStatsMetrics(options: BundleStatsOptions = {}): PluginOption {
-
+function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
     const isProd = process.env.NODE_ENV === 'production';
     const jsonFilePath = options.outputFile || join(process.cwd(), isProd ? 'bundle-stats-prod.json' : 'bundle-stats-dev.json');
     let buildStartTime = 0;
@@ -61,7 +58,7 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): PluginOption {
     }
 
     function writeOutputToFile(data: object, filePath: string, format: 'json' | 'txt' | 'csv') {
-        let content: string = ''; // Initialize with an empty string
+        let content: string = '';
     
         if (format === 'json') {
             content = JSON.stringify(data, null, 2);
@@ -76,11 +73,9 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): PluginOption {
                 .join('\n');
         }
     
-        // Ensure content is always a string before writing to the file
         writeFileSync(filePath, content || '', 'utf8');
     }
     
-
     return {
         name: 'bundle-stats-metrics',
         apply: 'build',
@@ -91,24 +86,23 @@ function bundleStatsMetrics(options: BundleStatsOptions = {}): PluginOption {
             totalBuildTime = (Date.now() - buildStartTime) / 1000;
         },
         generateBundle(_, bundle) {
-                     if (!isProd) return; // Run only in production mode
+            if (!isProd) return;
             const stats = extractSizeInfo(bundle);
             writeOutputToFile(stats, jsonFilePath, options.format || 'json');
-
-            // Log summary/detailed stats
+    
             if (options.logToConsole === 'summary') {
                 console.log(`\n📊 Bundle Size: ${stats.bundle.value} KiB`);
             } else if (options.logToConsole === 'detailed') {
                 console.log('\n📊 Bundle Stats:\n', stats);
             }
-
-            // Check bundle size threshold warning
+    
             if (options.warnThreshold && stats.bundle.value > options.warnThreshold) {
                 console.warn(`⚠️ Warning: Bundle size (${stats.bundle.value} KiB) exceeds the threshold of ${options.warnThreshold} KiB`);
             }
         },
-    } as Plugin; // ✅ Explicitly cast as Plugin
+    };
 }
 
-export default bundleStatsMetrics;
-
+export default function bundleStatsMetricsPlugin(options?: BundleStatsOptions): PluginOption {
+    return options ? bundleStatsMetrics(options) : false;
+}

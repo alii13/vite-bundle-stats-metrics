@@ -1,6 +1,6 @@
 {
     "name": "vite-bundle-stats-metrics",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A Vite plugin to generate bundle stats metrics.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
