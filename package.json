@@ -1,6 +1,6 @@
 {
     "name": "vite-bundle-stats-metrics",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "A Vite plugin to generate bundle stats metrics.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
@@ -37,6 +37,6 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/yourusername/vite-bundle-stats-metrics.git"
+        "url": "https://github.com/alii13/vite-bundle-stats-metrics.git"
     }
 }
