@@ -13,7 +13,7 @@ type BundleStatsOptions = {
 function bundleStatsMetrics(options: BundleStatsOptions = {}): Plugin {
     const isProd = process.env.NODE_ENV === 'production';
     let fileExtension = options.format || 'json';
-    let jsonFilePath = options.outputFile || join(process.cwd(), `bundle-stats.${fileExtension}`);
+    let jsonFilePath = `options.outputFile.${fileExtension}` || join(process.cwd(), `bundle-stats.${fileExtension}`);
 
     let buildStartTime = 0;
     let totalBuildTime = 0;
