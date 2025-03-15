@@ -36,7 +36,7 @@ import bundleStatsMetrics from 'vite-bundle-stats-metrics';
 export default defineConfig({
   plugins: [
     bundleStatsMetrics({
-      outputFile: 'dist/bundle-stats.json',
+      outputFile: 'dist/bundle-stats',
       format: 'json', // Available options: 'json' | 'txt' | 'csv'
       logToConsole: 'summary', // 'summary' | 'detailed' | false
       warnThreshold: 500 // KiB - Logs a warning if exceeded
